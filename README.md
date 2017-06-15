@@ -108,24 +108,24 @@
 	キー名 = title
 	値 = 型安全なプロパティ
 	デフォルト値 = null
-	値の型 = class java.lang.String
+	型 = class java.lang.String
 	
 	キー名 = timeout
 	値 = 45
 	デフォルト値 = 30
-	値の型 = class java.lang.Integer
+	型 = class java.lang.Integer
 	
 	キー名 = locale
 	値 = ja
 	デフォルト値 = ja_JP
-	値の型 = class java.util.Locale
+	型 = class java.util.Locale
 	
 	キー名 = charset
 	値 = windows-31j
 	デフォルト値 = UTF-8
-	値の型 = class java.nio.charset.Charset
+	型 = class java.nio.charset.Charset
 	
 	キー名 = start
 	値 = 2017-01-01
 	デフォルト値 = 2017-06-15
-	値の型 = class java.time.LocalDate
+	型 = class java.time.LocalDate
