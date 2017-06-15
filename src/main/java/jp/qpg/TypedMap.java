@@ -32,9 +32,9 @@ public class TypedMap {
          */
         public final T value;
         /**
-         * Value class
+         * Value type class
          */
-        public final Class<T> clazz;
+        public final Class<T> type;
         /**
          * Owner
          */
@@ -51,7 +51,7 @@ public class TypedMap {
             this.owner = owner;
             this.name = name;
             this.value = value != null && value.length > 0 ? value[0] : null;
-            this.clazz = (Class<T>) (value == null ? Object.class : value.getClass().getComponentType());
+            this.type = (Class<T>) (value == null ? Object.class : value.getClass().getComponentType());
         }
 
         /**
@@ -117,23 +117,23 @@ public class TypedMap {
      * @return Value
      */
     public <T> T get(Key<T> key) {
-        return key.clazz.cast(cache.computeIfAbsent(key, __ -> {
+        return key.type.cast(cache.computeIfAbsent(key, __ -> {
             Object value = map.getOrDefault(key.name, key.value);
             if (value == null) {
                 return key.value;
             }
-            if (key.clazz.isAssignableFrom(value.getClass())) {
-                return key.clazz.cast(value);
+            if (key.type.isAssignableFrom(value.getClass())) {
+                return key.type.cast(value);
             }
-            Function<String, Object> converter = converters.get(key.clazz);
+            Function<String, Object> converter = converters.get(key.type);
             if (converter == null) {
-                Logger.getGlobal().warning("not found converter: " + String.class + " -> " + key.clazz);
+                Logger.getGlobal().warning("not found converter: " + String.class + " -> " + key.type);
                 return key.value;
             }
             try {
                 return converter.apply(String.valueOf(value));
             } catch (Exception e) {
-                Logger.getGlobal().warning(String.class + " `" + value + "` connot convert to " + key.clazz);
+                Logger.getGlobal().warning(String.class + " `" + value + "` connot convert to " + key.type);
                 return key.value;
             }
         }));
